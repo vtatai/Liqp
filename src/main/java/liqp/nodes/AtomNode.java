@@ -36,4 +36,9 @@ public class AtomNode implements LNode {
 
         return value;
     }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
+    }
 }

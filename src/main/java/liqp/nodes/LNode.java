@@ -18,4 +18,13 @@ public interface LNode {
      * @return an Object denoting the rendered AST.
      */
     Object render(TemplateContext context);
+
+    /**
+     * Accepts a LNodeVisitor
+     *
+     * @param context the context used by the visitor
+     * @param visitor the visitor
+     * @return an Object representing the result of visiting the AST
+     */
+    Object accept(TemplateContext context, LNodeVisitor visitor);
 }

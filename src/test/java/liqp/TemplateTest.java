@@ -356,4 +356,25 @@ public class TemplateTest {
         assertNotNull(res);
     }
 
+    @Test
+    public void testOptimize() {
+        // given
+        Template template = TemplateParser.DEFAULT.parse("A: {{ foo.a }} B: {{ newfoo.b }}");
+
+        Map<String, Object> sample = new HashMap<>();
+        sample.put("foo", new Foo());
+
+        template.optimize(sample);
+
+        Foo foo = new Foo();
+        foo.a = "z";
+        sample.put("foo", foo);
+        sample.put("newfoo", foo);
+
+        // when
+        String res = template.render(sample);
+
+        // then
+        assertEquals("A: A B: B", res);
+    }
 }

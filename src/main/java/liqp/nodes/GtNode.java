@@ -1,5 +1,6 @@
 package liqp.nodes;
 
+import liqp.TemplateContext;
 import liqp.exceptions.IncompatibleTypeComparisonException;
 
 import java.util.Optional;
@@ -26,4 +27,9 @@ public class GtNode extends ComparingExpressionNode {
         return false;
     }
 
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
+    }
 }

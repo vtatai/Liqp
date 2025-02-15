@@ -1,6 +1,7 @@
 package liqp.nodes;
 
 import liqp.LValue;
+import liqp.TemplateContext;
 
 import java.util.Objects;
 
@@ -30,5 +31,10 @@ public class EqNode extends ComparingExpressionNode {
             return false;
         }
         return LValue.areEqual(a, b);
+    }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
     }
 }

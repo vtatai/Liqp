@@ -54,4 +54,9 @@ public class FilterNode implements LNode {
     public Object render(TemplateContext context) {
         throw new RuntimeException("cannot render a filter");
     }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
+    }
 }

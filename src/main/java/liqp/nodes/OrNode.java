@@ -19,4 +19,9 @@ public class OrNode extends LValue implements LNode {
         return super.asBoolean(lhs.render(context)) || super.asBoolean(rhs.render(context));
 
     }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
+    }
 }

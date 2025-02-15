@@ -1,5 +1,6 @@
 package liqp.nodes;
 
+import liqp.TemplateContext;
 import liqp.exceptions.IncompatibleTypeComparisonException;
 
 public class GtEqNode extends ComparingExpressionNode {
@@ -21,5 +22,10 @@ public class GtEqNode extends ComparingExpressionNode {
             throw new IncompatibleTypeComparisonException(a, b);
         }
         return false;
+    }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
     }
 }

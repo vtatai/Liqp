@@ -501,4 +501,8 @@ public class Template {
     TemplateParser getTemplateParser() {
         return templateParser;
     }
+
+    public void optimize(Map<String, Object> variables) {
+
+    }
 }

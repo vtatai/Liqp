@@ -33,4 +33,9 @@ public class InsertionNode implements LNode {
     public Object render(TemplateContext context) {
         return insertion.render(context, tokens);
     }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
+    }
 }

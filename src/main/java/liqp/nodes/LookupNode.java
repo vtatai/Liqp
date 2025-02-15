@@ -262,4 +262,9 @@ public class LookupNode implements LNode {
 
         return builder.toString();
     }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
+    }
 }

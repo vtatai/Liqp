@@ -20,4 +20,9 @@ public class AttributeNode implements LNode {
                 value.render(context)
         };
     }
+
+    @Override
+    public Object accept(TemplateContext context, LNodeVisitor visitor) {
+        return visitor.visit(context, this);
+    }
 }
