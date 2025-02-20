@@ -3,6 +3,7 @@ package liqp.nodes;
 import liqp.TemplateContext;
 import liqp.Insertion;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class InsertionNode implements LNode {
@@ -35,7 +36,8 @@ public class InsertionNode implements LNode {
     }
 
     @Override
-    public Object accept(TemplateContext context, LNodeVisitor visitor) {
-        return visitor.visit(context, this);
+    public void accept(TemplateContext context, LNodeVisitor visitor) {
+        Arrays.stream(tokens).forEach(token -> token.accept(context, visitor));
+        visitor.visit(context, this);
     }
 }

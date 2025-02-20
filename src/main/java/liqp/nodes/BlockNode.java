@@ -71,7 +71,8 @@ public class BlockNode implements LNode {
     }
 
     @Override
-    public Object accept(TemplateContext context, LNodeVisitor visitor) {
-        return visitor.visit(context ,this);
+    public void accept(TemplateContext context, LNodeVisitor visitor) {
+        children.forEach(child -> child.accept(context, visitor));
+        visitor.visit(context ,this);
     }
 }

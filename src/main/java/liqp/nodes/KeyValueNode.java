@@ -23,7 +23,10 @@ public class KeyValueNode implements LNode {
     }
 
     @Override
-    public Object accept(TemplateContext context, LNodeVisitor visitor) {
-        return visitor.visit(context, this);
+    public void accept(TemplateContext context, LNodeVisitor visitor) {
+        if (value != null) {
+            value.accept(context, visitor);
+        }
+        visitor.visit(context, this);
     }
 }

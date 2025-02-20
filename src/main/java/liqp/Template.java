@@ -1,19 +1,5 @@
 package liqp;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.function.Consumer;
-
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.atn.PredictionMode;
-import org.antlr.v4.runtime.tree.ParseTree;
-
 import liqp.exceptions.LiquidException;
 import liqp.nodes.LNode;
 import liqp.parser.Inspectable;
@@ -21,9 +7,16 @@ import liqp.parser.LiquidSupport;
 import liqp.parser.v4.NodeVisitor;
 import liqp.spi.BasicTypesSupport;
 import liqp.spi.SPIHelper;
-import liqp.tags.Include;
 import liquid.parser.v4.LiquidLexer;
 import liquid.parser.v4.LiquidParser;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.PredictionMode;
+import org.antlr.v4.runtime.tree.ParseTree;
+
+import java.nio.file.Path;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.Consumer;
 
 /**
  * The main class of this library. Use one of its static <code>parse(...)</code> to get a hold of a
@@ -50,6 +43,8 @@ public class Template {
     private ContextHolder contextHolder;
 
     private final TemplateParser templateParser;
+
+    private LNode rootNode;
 
     Template(TemplateParser templateParser, CharStream stream, Path location) {
         this.templateParser = templateParser;
@@ -352,9 +347,11 @@ public class Template {
         }
         variables = templateParser.evaluate(templateParser.mapper, variables);
 
-        final NodeVisitor visitor = new NodeVisitor(templateParser.insertions, templateParser.filters, templateParser.liquidStyleInclude);
         try {
-            LNode node = visitor.visit(root);
+            if (rootNode == null) {
+                NodeVisitor visitor = new NodeVisitor(templateParser.insertions, templateParser.filters, templateParser.liquidStyleInclude);
+                rootNode = visitor.visit(root);
+            }
             if (parent == null) {
                 this.templateContext = newRootContext(variables);
             } else {
@@ -366,7 +363,7 @@ public class Template {
             if (this.contextHolder != null) {
                 contextHolder.setContext(templateContext);
             }
-            Object rendered = node.render(this.templateContext);
+            Object rendered = rootNode.render(this.templateContext);
 
             return templateContext.getParser().getRenderTransformer()
                     .transformObject(templateContext, rendered);
@@ -503,6 +500,8 @@ public class Template {
     }
 
     public void optimize(Map<String, Object> variables) {
-
+        NodeVisitor visitor = new NodeVisitor(templateParser.insertions, templateParser.filters, templateParser.liquidStyleInclude);
+        rootNode = visitor.visit(root);
+        rootNode.accept(newRootContext(variables), new OptimizingVisitor());
     }
 }

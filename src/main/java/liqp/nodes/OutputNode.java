@@ -63,7 +63,39 @@ public class OutputNode implements LNode {
     }
 
     @Override
-    public Object accept(TemplateContext context, LNodeVisitor visitor) {
-        return visitor.visit(context, this);
+    public void accept(TemplateContext context, LNodeVisitor visitor) {
+        if (expression != null) {
+            expression.accept(context, visitor);
+        }
+        filters.forEach(f -> f.accept(context, visitor));
+        visitor.visit(context, this);
+    }
+
+    public LNode getExpression() {
+        return expression;
+    }
+
+    public String getUnparsed() {
+        return unparsed;
+    }
+
+    public Integer getUnparsedline() {
+        return unparsedline;
+    }
+
+    public Integer getUnparsedPosition() {
+        return unparsedPosition;
+    }
+
+    public List<FilterNode> getFilters() {
+        return filters;
+    }
+
+    public void setExpression(LNode expression) {
+        this.expression = expression;
+    }
+
+    public void setFilters(List<FilterNode> filters) {
+        this.filters = filters;
     }
 }

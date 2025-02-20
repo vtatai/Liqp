@@ -56,7 +56,8 @@ public class FilterNode implements LNode {
     }
 
     @Override
-    public Object accept(TemplateContext context, LNodeVisitor visitor) {
-        return visitor.visit(context, this);
+    public void accept(TemplateContext context, LNodeVisitor visitor) {
+        params.forEach(param -> param.accept(context, visitor));
+        visitor.visit(context, this);
     }
 }

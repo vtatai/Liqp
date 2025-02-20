@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import liqp.parser.Flavor;
 import org.antlr.v4.runtime.RecognitionException;
 import org.junit.Test;
 
@@ -359,7 +360,11 @@ public class TemplateTest {
     @Test
     public void testOptimize() {
         // given
-        Template template = TemplateParser.DEFAULT.parse("A: {{ foo.a }} B: {{ newfoo.b }}");
+        Template template = new TemplateParser.Builder()
+                .withFlavor(Flavor.LIQP)
+                .withStrictVariables(true)
+                .build()
+                .parse("A: {{ foo.a }} B: {{ newfoo.b }}");
 
         Map<String, Object> sample = new HashMap<>();
         sample.put("foo", new Foo());

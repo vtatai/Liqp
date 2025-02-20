@@ -34,7 +34,13 @@ public class EqNode extends ComparingExpressionNode {
     }
 
     @Override
-    public Object accept(TemplateContext context, LNodeVisitor visitor) {
-        return visitor.visit(context, this);
+    public void accept(TemplateContext context, LNodeVisitor visitor) {
+        if (rhs != null) {
+            rhs.accept(context, visitor);
+        }
+        if (lhs != null) {
+            lhs.accept(context, visitor);
+        }
+        visitor.visit(context, this);
     }
 }

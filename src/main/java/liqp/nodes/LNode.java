@@ -24,7 +24,6 @@ public interface LNode {
      *
      * @param context the context used by the visitor
      * @param visitor the visitor
-     * @return an Object representing the result of visiting the AST
      */
-    Object accept(TemplateContext context, LNodeVisitor visitor);
+    void accept(TemplateContext context, LNodeVisitor visitor);
 }

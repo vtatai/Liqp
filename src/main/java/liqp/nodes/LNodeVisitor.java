@@ -3,37 +3,37 @@ package liqp.nodes;
 import liqp.TemplateContext;
 
 public interface LNodeVisitor {
-    Object visit(TemplateContext context, BlockNode blockNode);
+    void visit(TemplateContext context, BlockNode blockNode);
 
-    Object visit(TemplateContext context, AttributeNode attributeNode);
+    void visit(TemplateContext context, AttributeNode attributeNode);
 
-    Object visit(TemplateContext context, InsertionNode insertionNode);
+    void visit(TemplateContext context, InsertionNode insertionNode);
 
-    Object visit(TemplateContext context, OutputNode outputNode);
+    void visit(TemplateContext context, OutputNode outputNode);
 
-    Object visit(TemplateContext context, FilterNode filterNode);
+    void visit(TemplateContext context, FilterNode filterNode);
 
-    Object visit(TemplateContext context, ContainsNode containsNode);
+    void visit(TemplateContext context, ContainsNode containsNode);
 
-    Object visit(TemplateContext context, GtEqNode gtEqNode);
+    void visit(TemplateContext context, GtEqNode gtEqNode);
 
-    Object visit(TemplateContext context, KeyValueNode keyValueNode);
+    void visit(TemplateContext context, KeyValueNode keyValueNode);
 
-    Object visit(TemplateContext context, NEqNode nEqNode);
+    void visit(TemplateContext context, NEqNode nEqNode);
 
-    Object visit(TemplateContext context, LtNode ltNode);
+    void visit(TemplateContext context, LtNode ltNode);
 
-    Object visit(TemplateContext context, EqNode eqNode);
+    void visit(TemplateContext context, EqNode eqNode);
 
-    Object visit(TemplateContext context, GtNode gtNode);
+    void visit(TemplateContext context, GtNode gtNode);
 
-    Object visit(TemplateContext context, OrNode orNode);
+    void visit(TemplateContext context, OrNode orNode);
 
-    Object visit(TemplateContext context, AndNode andNode);
+    void visit(TemplateContext context, AndNode andNode);
 
-    Object visit(TemplateContext context, LookupNode lookupNode);
+    void visit(TemplateContext context, LookupNode lookupNode);
 
-    Object visit(TemplateContext context, AtomNode atomNode);
+    void visit(TemplateContext context, AtomNode atomNode);
 
-    Object visit(TemplateContext context, LtEqNode ltEqNode);
+    void visit(TemplateContext context, LtEqNode ltEqNode);
 }
