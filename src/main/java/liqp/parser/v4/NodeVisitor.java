@@ -540,15 +540,7 @@ public class NodeVisitor extends LiquidParserBaseVisitor<LNode> {
     if (ctx.evaluate != null) {
       node = new OutputNode(visit(ctx.expr()), null, null, null);
     } else {
-      String unparsed = null;
-      Integer unparsedLine = null;
-      Integer unparsedStart = null;
-      if (ctx.unparsed != null) {
-        unparsed = ctx.unparsed.getText();
-        unparsedLine = ctx.unparsed.getStart().getLine();
-        unparsedStart = ctx.unparsed.getStart().getCharPositionInLine();
-      }
-      node = new OutputNode(visit(ctx.term()), unparsed, unparsedLine, unparsedStart);
+      node = new OutputNode(visit(ctx.term()), null, null, null);
     }
 
     for (FilterContext child : ctx.filter()) {
